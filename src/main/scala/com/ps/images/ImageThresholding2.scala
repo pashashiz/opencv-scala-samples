@@ -5,7 +5,6 @@ import org.bytedeco.opencv.global.opencv_imgcodecs._
 import org.bytedeco.opencv.global.opencv_imgproc._
 import org.bytedeco.opencv.opencv_core._
 
-// image kernels explained https://setosa.io/ev/image-kernels/
 // read https://docs.opencv.org/4.8.0/d7/d4d/tutorial_py_thresholding.html
 // https://docs.opencv.org/4.x/db/d8e/tutorial_threshold.html
 object ImageThresholding2 {
