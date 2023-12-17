@@ -2,10 +2,14 @@ package com.ps.videos
 
 import org.bytedeco.ffmpeg.global.avcodec._
 import org.bytedeco.javacv._
+import org.bytedeco.opencv.opencv_core._
 
 import scala.collection.immutable.LazyList.continually
+import org.bytedeco.opencv.global.opencv_imgproc._
 
-object VideoFromFileToFile {
+import scala.util.Using
+
+object VideoMakeGreyscale {
 
   def main(args: Array[String]): Unit = {
 
@@ -14,7 +18,7 @@ object VideoFromFileToFile {
 
     val recorder =
       new FFmpegFrameRecorder(
-        "target/hand_move.mp4",
+        "target/hand_move_greyscale.mp4",
         grabber.getImageWidth,
         grabber.getImageHeight,
         grabber.getAudioChannels)
@@ -23,7 +27,15 @@ object VideoFromFileToFile {
 
     // Read frame by frame, stop early if the display window is closed
     for (frame <- continually(grabber.grab()).takeWhile(_ != null)) {
-      recorder.record(frame)
+      val outputFrame = Using.resource(new OpenCVFrameConverter.ToMat()) { frameConverter =>
+        // creates a pointer to Frame byte buffer and creates Mat from this pointer
+        // important: both share same byte bugger now
+        val input = frameConverter.convert(frame)
+        val output = new Mat()
+        cvtColor(input, output, COLOR_BGR2GRAY)
+        frameConverter.convert(output)
+      }
+      recorder.record(outputFrame)
     }
 
     grabber.release()

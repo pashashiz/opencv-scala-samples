@@ -31,7 +31,7 @@ object VideoFromCameraToFile {
     // File to write
     // mp4 doesn't support streaming use avi or mkv
     val recorder =
-      new FFmpegFrameRecorder("camera.avi", grabber.getImageWidth, grabber.getImageHeight, 2)
+      new FFmpegFrameRecorder("target/camera.avi", grabber.getImageWidth, grabber.getImageHeight, 2)
     recorder.setFrameRate(grabber.getFrameRate)
     recorder.start()
 
