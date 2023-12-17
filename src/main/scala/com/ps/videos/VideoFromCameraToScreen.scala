@@ -5,18 +5,27 @@ import org.bytedeco.javacv.{CanvasFrame, FFmpegFrameGrabber}
 import javax.swing.WindowConstants
 import scala.collection.immutable.LazyList.continually
 
-object VideoGrabber {
+import org.bytedeco.opencv.global.opencv_videoio._
+import org.bytedeco.opencv.global.opencv_video._
+
+object VideoFromCameraToScreen {
 
   def main(args: Array[String]): Unit = {
 
-    val screenSize = 0.5
+    val screenSize = 1
 
     // get stream from web camera
     val grabber = new FFmpegFrameGrabber("0")
     grabber.setFormat("avfoundation")
     grabber.setFrameRate(30)
+    grabber.setImageWidth(640)
+    grabber.setImageHeight(480)
     grabber.setVideoOption("probesize", "10000000")
     grabber.start()
+
+    // org.bytedeco.ffmpeg.global.avcodec.AV_CODEC_ID_RAWVIDEO = 13
+    println(s"Video Codec: ${grabber.getVideoCodec}")
+    println(s"Audio Codec: ${grabber.getAudioCodec}")
 
     // Prepare window to display frames
     val canvasFrame = new CanvasFrame("Video", 1)
