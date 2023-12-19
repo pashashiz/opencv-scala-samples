@@ -57,7 +57,6 @@ object VideoFromCameraToFile {
     println("release!")
     // Close the video file
     grabber.release()
-    recorder.flush()
-    recorder.release()
+    recorder.stop()
   }
 }
