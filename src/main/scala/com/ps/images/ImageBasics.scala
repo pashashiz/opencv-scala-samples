@@ -13,7 +13,7 @@ object ImageBasics {
   // CvArr - old C API, used in functions cvFunc
   def main(args: Array[String]): Unit = {
     val image = imread("data/00-puppy.jpg")
-    // imshow("Image 1", image)
+     imshow("Image 1", image)
     // convert color
     val image2 = new Mat()
     cvtColor(image, image2, COLOR_RGB2GRAY)

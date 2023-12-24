@@ -1,7 +1,8 @@
 package com
 
-import org.bytedeco.javacpp.IntPointer
+import org.bytedeco.javacpp.{BytePointer, IntPointer}
 import org.bytedeco.javacv.{CanvasFrame, Java2DFrameConverter, OpenCVFrameConverter}
+import org.bytedeco.opencv.global.opencv_imgcodecs.imencode
 import org.bytedeco.opencv.opencv_core.{Mat, MatVector}
 
 import java.awt.image.BufferedImage
@@ -61,5 +62,14 @@ package object ps {
     } finally {
       if (java2DConverter != null) java2DConverter.close()
     }
+  }
+
+  def encodeImage(image: Mat, ext: String = ".jpg", maxBufferSizeMb: Int = 4): Array[Byte] = {
+    val out = new BytePointer(maxBufferSizeMb * 1024 * 1024)
+    imencode(ext, image, out)
+    val buffer = out.asBuffer()
+    val bytes = new Array[Byte](buffer.remaining)
+    buffer.get(bytes)
+    bytes
   }
 }

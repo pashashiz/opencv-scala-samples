@@ -20,6 +20,7 @@ object ImageDraw {
     val white = new Scalar(255.0, 255.0, 255.0, 0)
 
     // add rectangle
+    // (x left, y up)
     rectangle(img, new Point(384, 0), new Point(510, 128), green, 5, LINE_8, 0)
     // add circle
     circle(img, new Point(100, 100), 50, blue, 5, LINE_8, 0)
